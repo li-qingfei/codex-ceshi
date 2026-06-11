@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MTC</title>
+  <style>
+    :root {
+      --chrome: #ebeaf1;
+      --sidebar: #e6e6ec;
+      --sidebar-active: #d9d9e1;
+      --text: #202027;
+      --muted: #707887;
+      --soft: #9098a8;
+      --line: #e5e8ef;
+      --accent: #7465ff;
+      --blue: #2f8cff;
+      --panel-shadow: 0 22px 50px rgba(184, 202, 214, .22);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #fff;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .app {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 64px 1fr;
+      background: #fff;
+    }
+
+    .titlebar {
+      height: 64px;
+      background: var(--chrome);
+      display: flex;
+      align-items: center;
+      padding: 0 16px 0 14px;
+      gap: 18px;
+      color: #646a76;
+      font-size: 16px;
+      user-select: none;
+    }
+
+    .brand-pill {
+      height: 38px;
+      min-width: 92px;
+      border-radius: 8px;
+      background: #deddf2;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px;
+      color: #2e3038;
+      font-weight: 650;
+    }
+
+    .brand-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 5px;
+      background: #fff;
+      border: 1px solid #c7c9d2;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .brand-icon::before {
+      content: "";
+      width: 12px;
+      height: 8px;
+      border: 2px solid #333943;
+      border-radius: 2px;
+      box-shadow: inset 3px 0 0 -1px #333943, inset -3px 0 0 -1px #333943;
+    }
+
+    .top-icon {
+      width: 18px;
+      height: 18px;
+      color: #343944;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      line-height: 1;
+      margin-left: -4px;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: #707681;
+    }
+
+    .window-buttons {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      color: #333741;
+      font-size: 20px;
+    }
+
+    .window-button {
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      font-size: 18px;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 348px 1fr;
+      min-height: 0;
+    }
+
+    .sidebar {
+      background: var(--sidebar);
+      height: 100%;
+      padding: 0 14px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      color: #4f5662;
+      font-size: 16px;
+    }
+
+    .side-primary {
+      height: 38px;
+      border-radius: 8px;
+      background: var(--sidebar-active);
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      margin: 0 0 14px;
+      gap: 8px;
+      color: #29303a;
+    }
+
+    .side-primary .keys {
+      margin-left: auto;
+      color: #9198a5;
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+
+    .nav-row {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 2px;
+      color: #2f3540;
+    }
+
+    .section-title {
+      margin-top: 18px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #7d8491;
+      font-size: 14px;
+    }
+
+    .section-tools {
+      display: inline-flex;
+      gap: 16px;
+      align-items: center;
+      color: #8b93a1;
+      font-size: 17px;
+      padding-right: 6px;
+    }
+
+    .folder-row {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #46505d;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .folder-row .plus {
+      margin-left: auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: #fff;
+      color: #87909d;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .task-list {
+      display: grid;
+      gap: 18px;
+      padding-left: 28px;
+      padding-top: 2px;
+      color: #57606d;
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    .user {
+      margin-top: auto;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #2f3540;
+      font-size: 15px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      background: #df9b36;
+      position: relative;
+    }
+
+    .avatar::before {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #432d14;
+      top: 7px;
+      left: 12px;
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 8px;
+      border-radius: 8px 8px 3px 3px;
+      background: #432d14;
+      bottom: 7px;
+      left: 8px;
+    }
+
+    .user .device {
+      margin-left: auto;
+      width: 16px;
+      height: 16px;
+      border: 1.8px solid #555e6a;
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .user .device::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      bottom: 1px;
+      height: 1.5px;
+      background: #555e6a;
+    }
+
+    .main-shell {
+      background: #fff;
+      border-top-left-radius: 10px;
+      min-width: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main {
+      height: 100%;
+      padding-top: min(16vh, 166px);
+      padding-left: 34px;
+      padding-right: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero {
+      text-align: center;
+      transform: translateX(4px);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 49px;
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: 0;
+      color: #19191f;
+    }
+
+    .accent { color: var(--accent); }
+
+    .beta {
+      display: inline-grid;
+      place-items: center;
+      vertical-align: top;
+      height: 17px;
+      min-width: 36px;
+      padding: 0 4px;
+      border-radius: 3px;
+      background: #edf0f6;
+      border: 1px solid #d8dde8;
+      color: #939aa8;
+      font-size: 10px;
+      font-weight: 700;
+      margin-left: 6px;
+      margin-top: 1px;
+    }
+
+    .subtitle {
+      margin-top: 18px;
+      color: #1f2530;
+      font-size: 18px;
+      font-weight: 550;
+    }
+
+    .cards {
+      margin-top: 118px;
+      width: min(100%, 770px);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .card {
+      height: 160px;
+      border: 1px solid #e7ebf2;
+      border-radius: 10px;
+      background: #fff;
+      padding: 20px 16px 13px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 1px 1px rgba(35, 42, 56, .015);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 27px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .web-reader-icon {
+      width: 54px;
+      height: 32px;
+      overflow: visible;
+      display: block;
+      transform: translate(1px, 3px);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #222936;
+      margin-bottom: 6px;
+    }
+
+    .card-text {
+      color: #7d8797;
+      font-size: 13px;
+      line-height: 1.3;
+      max-width: 150px;
+    }
+
+    .input-wrap {
+      width: min(100%, 1012px);
+      height: 248px;
+      margin-top: 30px;
+      border-radius: 38px;
+      box-shadow: var(--panel-shadow);
+      background: linear-gradient(to bottom, rgba(255,255,255,.72), rgba(234,246,248,.62));
+      padding: 22px 32px 0 32px;
+    }
+
+    .composer {
+      height: 190px;
+      border: 1px solid #cdd7e6;
+      border-radius: 15px;
+      background: #fff;
+      box-shadow: 0 2px 7px rgba(39, 55, 80, .07);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .placeholder {
+      padding: 20px 20px 0;
+      font-size: 15px;
+      color: #7f8998;
+    }
+
+    .composer-bottom {
+      margin-top: auto;
+      height: 52px;
+      padding: 0 14px 12px 20px;
+      display: flex;
+      align-items: center;
+      color: #424956;
+      gap: 18px;
+      font-size: 16px;
+    }
+
+    .composer-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      color: #2c3038;
+    }
+
+    .mode {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .send {
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #ded8ff;
+      color: #9488e8;
+      font-size: 23px;
+      line-height: 1;
+    }
+
+    .input-footer {
+      height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding-left: 24px;
+      color: #566272;
+      font-size: 14px;
+    }
+
+    .footer-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .footer-item.muted { color: #9aa3b0; }
+
+    .chev { color: #7b8492; font-size: 13px; }
+
+    .i {
+      width: 17px;
+      height: 17px;
+      display: inline-grid;
+      place-items: center;
+      color: currentColor;
+      flex: 0 0 auto;
+      position: relative;
+    }
+
+    .i.plus-circle::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border: 1.8px solid currentColor;
+      border-radius: 50%;
+    }
+    .i.plus-circle::after {
+      content: "+";
+      position: absolute;
+      font-size: 12px;
+      line-height: 1;
+      top: 2px;
+    }
+
+    .i.grid::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border: 1.7px solid currentColor;
+      border-radius: 1px;
+      box-shadow: 5px 5px 0 -3.5px var(--sidebar), 7px 7px 0 -3.5px currentColor;
+    }
+
+    .i.clock::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border: 1.7px solid currentColor;
+      border-radius: 50%;
+    }
+    .i.clock::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-left: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: translate(1px, -1px);
+    }
+
+    .i.folder::before {
+      content: "";
+      width: 16px;
+      height: 11px;
+      border: 1.7px solid currentColor;
+      border-radius: 1px;
+      margin-top: 3px;
+    }
+    .i.folder::after {
+      content: "";
+      position: absolute;
+      left: 1px;
+      top: 3px;
+      width: 7px;
+      height: 4px;
+      border: 1.7px solid currentColor;
+      border-bottom: 0;
+      border-radius: 1px 1px 0 0;
+      background: var(--sidebar);
+    }
+
+    .i.expand::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background:
+        linear-gradient(currentColor, currentColor) 0 2px / 5px 1.5px no-repeat,
+        linear-gradient(currentColor, currentColor) 2px 0 / 1.5px 5px no-repeat,
+        linear-gradient(currentColor, currentColor) 7px 10px / 5px 1.5px no-repeat,
+        linear-gradient(currentColor, currentColor) 10px 7px / 1.5px 5px no-repeat;
+      transform: rotate(45deg);
+    }
+
+    .i.menu-lines::before {
+      content: "";
+      width: 13px;
+      height: 9px;
+      background:
+        linear-gradient(currentColor, currentColor) 0 0 / 13px 1.5px no-repeat,
+        linear-gradient(currentColor, currentColor) 4px 4px / 9px 1.5px no-repeat,
+        linear-gradient(currentColor, currentColor) 0 8px / 13px 1.5px no-repeat;
+    }
+
+    .i.box::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border: 1.7px solid currentColor;
+      border-radius: 2px;
+    }
+    .i.box::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-left: 1.6px solid currentColor;
+      border-bottom: 1.6px solid currentColor;
+      transform: rotate(-10deg);
+    }
+
+    .i.clip::before {
+      content: "";
+      width: 7px;
+      height: 13px;
+      border: 1.7px solid currentColor;
+      border-radius: 5px;
+      transform: rotate(4deg);
+    }
+    .i.clip::after {
+      content: "";
+      position: absolute;
+      width: 3px;
+      height: 8px;
+      border: 1.5px solid currentColor;
+      border-top: 0;
+      border-radius: 0 0 3px 3px;
+      top: 3px;
+    }
+
+    .i.monitor::before {
+      content: "";
+      width: 16px;
+      height: 11px;
+      border: 1.7px solid currentColor;
+      border-radius: 1px;
+      transform: translateY(-2px);
+    }
+    .i.monitor::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 5px;
+      border-bottom: 1.7px solid currentColor;
+      border-left: 1.7px solid transparent;
+      border-right: 1.7px solid transparent;
+      bottom: 0;
+    }
+
+    .i.add-folder::before {
+      content: "";
+      width: 17px;
+      height: 12px;
+      border: 1.5px solid currentColor;
+      border-radius: 1px;
+      margin-top: 3px;
+    }
+    .i.add-folder::after {
+      content: "+";
+      position: absolute;
+      left: -2px;
+      top: -1px;
+      font-size: 14px;
+    }
+
+    .i.globe::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid currentColor;
+      border-radius: 50%;
+    }
+    .i.globe::after {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-left: 1.4px solid currentColor;
+      border-right: 1.4px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .i.mic::before {
+      content: "";
+      width: 7px;
+      height: 12px;
+      border: 1.7px solid currentColor;
+      border-radius: 5px;
+      transform: translateY(-2px);
+    }
+    .i.mic::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 8px;
+      border-bottom: 1.7px solid currentColor;
+      border-left: 1.7px solid transparent;
+      border-right: 1.7px solid transparent;
+      border-radius: 0 0 9px 9px;
+      bottom: 0;
+    }
+
+    .web-doc {
+      width: 37px;
+      height: 30px;
+      border-radius: 7px;
+      background: #fff;
+      box-shadow: 0 7px 13px rgba(43, 57, 82, .12);
+      position: relative;
+      transform: translate(3px, 3px) rotate(-9deg);
+    }
+    .web-doc::before {
+      content: "";
+      position: absolute;
+      width: 35px;
+      height: 30px;
+      border-radius: 7px;
+      background: #e9eef9;
+      left: -11px;
+      top: 5px;
+      z-index: -1;
+      box-shadow: 0 7px 13px rgba(45, 71, 115, .09);
+    }
+    .web-doc .dots {
+      position: absolute;
+      top: 7px;
+      left: 10px;
+      display: flex;
+      gap: 3px;
+    }
+    .web-doc .dots span {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      display: block;
+    }
+    .web-doc .line1,
+    .web-doc .line2 {
+      display: none;
+    }
+    .glasses {
+      position: absolute;
+      left: 8px;
+      bottom: -8px;
+      width: 28px;
+      height: 14px;
+      transform: rotate(9deg);
+    }
+    .glasses::before,
+    .glasses::after {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 8px;
+      border: 2.3px solid #506fa2;
+      border-radius: 50%;
+      top: 0;
+    }
+    .glasses::before { left: 0; }
+    .glasses::after { right: 0; }
+    .glasses span {
+      position: absolute;
+      left: 12px;
+      top: 4px;
+      width: 5px;
+      height: 3px;
+      border-top: 2.3px solid #506fa2;
+    }
+    .glasses i,
+    .glasses b {
+      position: absolute;
+      bottom: -4px;
+      width: 7px;
+      height: 5px;
+      border-bottom: 2.3px solid #506fa2;
+      border-radius: 0 0 10px 10px;
+    }
+    .glasses i { left: 5px; }
+    .glasses b { right: 5px; }
+
+    .ppt-doc {
+      width: 39px;
+      height: 45px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 6px 12px rgba(37, 58, 90, .09);
+      position: relative;
+    }
+    .ppt-doc::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      background: linear-gradient(135deg, #e8edf5 50%, #fff 50%);
+      border-radius: 0 8px 0 4px;
+    }
+    .ppt-badge {
+      position: absolute;
+      left: -7px;
+      top: 13px;
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      background: #ef342c;
+      color: #fff;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 10px rgba(239, 52, 44, .13);
+    }
+
+    .chart-doc {
+      width: 43px;
+      height: 43px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 6px 12px rgba(37, 58, 90, .10);
+      position: relative;
+      border: 1px solid #eef1f6;
+    }
+    .chart-doc .dots {
+      position: absolute;
+      top: 7px;
+      left: 7px;
+      display: flex;
+      gap: 4px;
+    }
+    .chart-doc .dots span {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      display: block;
+    }
+    .bars {
+      position: absolute;
+      left: 13px;
+      bottom: 9px;
+      height: 20px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    .bars span {
+      width: 4px;
+      border-radius: 3px 3px 0 0;
+      display: block;
+    }
+
+    .folder-big {
+      width: 46px;
+      height: 37px;
+      background: #46adf8;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 7px 12px rgba(31, 126, 220, .16);
+    }
+    .folder-big::before {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 9px;
+      left: 5px;
+      top: -6px;
+      background: #3b78ff;
+      border-radius: 5px 5px 0 0;
+    }
+    .folder-big::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 25px;
+      background: #4bb8fa;
+      border-radius: 5px;
+    }
+
+    @media (max-width: 1100px) {
+      .content { grid-template-columns: 286px 1fr; }
+      .cards { grid-template-columns: repeat(2, minmax(180px, 1fr)); margin-top: 72px; }
+      .main { padding-top: 90px; padding-right: 34px; }
+      .input-wrap { margin-top: 24px; }
+    }
+
+    @media (max-width: 760px) {
+      body { overflow: auto; }
+      .app { height: auto; min-height: 100vh; grid-template-rows: 54px auto; }
+      .titlebar { height: 54px; gap: 10px; padding-left: 10px; }
+      .menu { display: none; }
+      .content { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main-shell { border-radius: 0; overflow: visible; }
+      .main { padding: 58px 18px 28px; }
+      h1 { font-size: 34px; }
+      .subtitle { font-size: 15px; }
+      .cards { grid-template-columns: 1fr; margin-top: 46px; gap: 12px; }
+      .card { height: auto; min-height: 156px; }
+      .input-wrap { height: 226px; padding: 14px 10px 0; border-radius: 24px; }
+      .composer { height: 172px; }
+      .placeholder { font-size: 14px; }
+      .composer-actions { gap: 13px; }
+      .input-footer { padding-left: 12px; gap: 14px; }
+      .window-buttons { gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="titlebar">
+      <div class="brand-pill"><span class="brand-icon"></span><span>MTC</span></div>
+      <div class="top-icon">Ⅱ</div>
+      <nav class="menu"><span>编辑(E)</span><span>帮助(H)</span></nav>
+      <div class="window-buttons" aria-hidden="true">
+        <span class="window-button">−</span>
+        <span class="window-button">▣</span>
+        <span class="window-button">×</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <aside class="sidebar">
+        <div class="side-primary"><span class="i plus-circle"></span><span>新建任务</span><span class="keys">⌃ ⌘ N</span></div>
+        <div class="nav-row"><span class="i grid"></span><span>技能</span></div>
+        <div class="nav-row"><span class="i clock"></span><span>自动化</span></div>
+
+        <div class="section-title"><span>任务列表</span><span class="section-tools"><span class="i expand"></span><span class="i menu-lines"></span></span></div>
+        <div class="folder-row"><span class="i folder"></span><span>默认</span><span class="plus">+</span></div>
+        <div class="task-list">
+          <span>生成学术分享PPT</span>
+          <span>TRAE游戏行业应用案例PPT</span>
+          <span>TRAE Editor for Unity PPT</span>
+          <span>PPT内容英文化</span>
+          <span>论文科普PPT</span>
+          <span>星绘开发提效41%的背后</span>
+        </div>
+
+        <div class="user"><span class="avatar"></span><span>用户4023205233</span><span class="device"></span></div>
+      </aside>
+
+      <main class="main-shell">
+        <div class="main">
+          <section class="hero">
+            <h1><span class="accent">M</span>ore <span class="accent">T</span>han <span class="accent">C</span>oding<span class="beta">BETA</span></h1>
+            <div class="subtitle">多场景办公任务，交给 SOLO 搞定</div>
+          </section>
+
+          <section class="cards">
+            <article class="card">
+              <div class="card-icon">
+                <svg class="web-reader-icon" viewBox="0 0 104 60" aria-hidden="true">
+                  <defs>
+                    <filter id="readerCardShadow" x="-30%" y="-30%" width="160%" height="170%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#31466f" flood-opacity="0.13"/>
+                    </filter>
+                    <filter id="readerBackShadow" x="-30%" y="-30%" width="160%" height="170%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="2.5" flood-color="#344d7f" flood-opacity="0.09"/>
+                    </filter>
+                  </defs>
+                  <g transform="translate(12 1)">
+                    <rect x="8" y="17" width="46" height="34" rx="7" fill="#e9eef8" filter="url(#readerBackShadow)" transform="rotate(-14 31 34)"/>
+                    <g filter="url(#readerCardShadow)" transform="rotate(-7 48 25)">
+                      <rect x="31" y="8" width="50" height="34" rx="7" fill="#ffffff"/>
+                      <circle cx="42" cy="17" r="2.4" fill="#ff5a5a"/>
+                      <circle cx="51" cy="17" r="2.4" fill="#ffd45a"/>
+                      <circle cx="60" cy="17" r="2.4" fill="#26cf75"/>
+                    </g>
+                    <g transform="translate(41 29) rotate(1)" fill="none" stroke="#4f6f9f" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="9" cy="9" r="7"/>
+                      <circle cx="29" cy="9" r="7"/>
+                      <path d="M16 9 C18 6.8 20 6.8 22 9"/>
+                      <path d="M7 20 C11 23 16 22 18 18"/>
+                      <path d="M31 20 C27 23 22 22 20 18"/>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <div class="card-title">网页读取</div>
+              <div class="card-text">研读在线论文，产出论文综述的文档</div>
+            </article>
+
+            <article class="card">
+              <div class="card-icon"><div class="ppt-doc"><span class="ppt-badge">P</span></div></div>
+              <div class="card-title">调研分析</div>
+              <div class="card-text">调研多个短视频平台，生成汇报PPT</div>
+            </article>
+
+            <article class="card">
+              <div class="card-icon">
+                <div class="chart-doc">
+                  <div class="dots"><span style="background:#ff5b5b"></span><span style="background:#ffd45d"></span><span style="background:#28d17c"></span></div>
+                  <div class="bars"><span style="height:20px;background:#37a5ff"></span><span style="height:13px;background:#7b70ff"></span><span style="height:25px;background:#38d978"></span><span style="height:9px;background:#b7c4d8"></span></div>
+                </div>
+              </div>
+              <div class="card-title">数据挖掘</div>
+              <div class="card-text">挖掘市场增长数据，分析数据发展趋势</div>
+            </article>
+
+            <article class="card">
+              <div class="card-icon"><div class="folder-big"></div></div>
+              <div class="card-title">文件管理</div>
+              <div class="card-text">整理本地文件夹，列出 Excel 清单</div>
+            </article>
+          </section>
+
+          <section class="input-wrap">
+            <div class="composer">
+              <div class="placeholder">帮你整理论文综述、编写 PPT、分析 Excel 等日常工作，输出专业级工作成果。</div>
+              <div class="composer-bottom">
+                <span class="i box"></span><span class="i clip"></span>
+                <div class="composer-actions">
+                  <span class="mode">SOLO Auto Mode <span class="chev">⌄</span></span>
+                  <span class="i globe"></span><span class="i mic"></span><button class="send" aria-label="发送">↑</button>
+                </div>
+              </div>
+            </div>
+            <div class="input-footer">
+              <span class="footer-item"><span class="i monitor"></span><span>本地</span><span class="chev">⌄</span></span>
+              <span class="footer-item muted"><span class="i add-folder"></span><span>选择文件夹（可选）</span><span class="chev">⌄</span></span>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
