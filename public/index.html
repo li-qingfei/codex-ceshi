@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>飞扬汽车洗护中心 | 精洗美容养护门店</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #65717d;
+      --line: #dfe7ec;
+      --paper: #f7fafb;
+      --white: #ffffff;
+      --teal: #087d7b;
+      --teal-dark: #045b5a;
+      --coral: #e35f4f;
+      --gold: #c59034;
+      --blue: #285f9f;
+      --shadow: 0 18px 45px rgba(19, 35, 49, 0.13);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      letter-spacing: 0;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid rgba(223, 231, 236, 0.88);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      min-height: 68px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 168px;
+    }
+
+    .brand-logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      box-shadow: 0 10px 26px rgba(8, 125, 123, 0.24);
+      flex: 0 0 auto;
+    }
+
+    .brand-logo svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.15;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: #344555;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      padding: 10px 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: var(--teal-dark);
+      border-color: var(--teal);
+    }
+
+    .nav-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 6px;
+      background: var(--coral);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(227, 95, 79, 0.23);
+      white-space: nowrap;
+    }
+
+    .hero {
+      min-height: 88vh;
+      padding-top: 68px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(5, 20, 31, 0.86), rgba(5, 20, 31, 0.48) 52%, rgba(5, 20, 31, 0.16)),
+        url("https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=1800&q=82") center / cover;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 90px;
+      background: linear-gradient(180deg, transparent, var(--paper));
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 54px 24px 118px;
+    }
+
+    .hero-logo-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .hero-logo-lockup .brand-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      box-shadow: 0 8px 18px rgba(8, 125, 123, 0.24);
+    }
+
+    .hero-logo-lockup .eyebrow {
+      margin-bottom: 0;
+    }
+
+    .hero-logo-lockup .eyebrow::before {
+      content: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: #d9f8f4;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      content: none;
+    }
+
+    h1 {
+      max-width: 730px;
+      margin: 0;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin: 24px 0 0;
+      color: #e7eff3;
+      font-size: 19px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      line-height: 1.2;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button.primary {
+      background: var(--coral);
+      color: var(--white);
+      box-shadow: 0 15px 32px rgba(227, 95, 79, 0.28);
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.42);
+      color: var(--white);
+    }
+
+    .hero-facts {
+      width: min(1080px, calc(100% - 48px));
+      margin: 24px auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      position: relative;
+      z-index: 4;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-fact {
+      min-height: 92px;
+      padding: 18px 20px;
+      border-right: 1px solid var(--line);
+    }
+
+    .hero-fact:last-child {
+      border-right: 0;
+    }
+
+    .hero-fact strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 24px;
+      color: var(--ink);
+    }
+
+    .hero-fact span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+    }
+
+    section {
+      padding: 84px 24px;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 36px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      margin: 0 0 10px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    h2 {
+      margin: 0;
+      max-width: 660px;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .section-lead {
+      max-width: 430px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .service-card {
+      min-height: 255px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 26px rgba(22, 39, 52, 0.07);
+    }
+
+    .service-card img {
+      width: 100%;
+      height: 142px;
+      object-fit: cover;
+    }
+
+    .service-card .body {
+      padding: 18px;
+    }
+
+    .service-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .service-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .process-band {
+      background: #102635;
+      color: var(--white);
+    }
+
+    .process-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.25fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .process-copy .section-kicker {
+      color: #8be0d9;
+    }
+
+    .process-copy p {
+      color: #c9d7df;
+      line-height: 1.8;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .step {
+      min-height: 286px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .step img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .step-body {
+      padding: 18px;
+    }
+
+    .step span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      background: var(--gold);
+      color: #111111;
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .step p {
+      margin: 0;
+      color: #d2dee5;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .pricing {
+      background: #eef5f6;
+    }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .price-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 410px;
+      padding: 26px;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .price-card.featured {
+      border: 2px solid var(--teal);
+    }
+
+    .tag {
+      align-self: flex-start;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--teal-dark);
+      background: #dff3f0;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .price-card h3 {
+      margin: 18px 0 8px;
+      font-size: 24px;
+    }
+
+    .price {
+      margin: 0 0 18px;
+      color: var(--ink);
+      font-size: 38px;
+      font-weight: 900;
+    }
+
+    .price small {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .price-card ul {
+      flex: 1;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .price-card li {
+      padding: 11px 0;
+      border-bottom: 1px solid #edf1f3;
+      color: #3c4b57;
+      font-size: 15px;
+    }
+
+    .price-card li::before {
+      content: "✓";
+      margin-right: 9px;
+      color: var(--teal);
+      font-weight: 900;
+    }
+
+    .price-card .button {
+      width: 100%;
+      margin-top: 24px;
+      color: var(--white);
+      background: var(--teal);
+    }
+
+    .gallery-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .gallery-main,
+    .gallery-side {
+      min-height: 420px;
+    }
+
+    .gallery-main img,
+    .gallery-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .gallery-side {
+      display: grid;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .visit {
+      padding-top: 0;
+    }
+
+    .visit-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .visit-info {
+      padding: 42px;
+    }
+
+    .visit-info h2 {
+      font-size: clamp(28px, 3vw, 40px);
+    }
+
+    .visit-list {
+      display: grid;
+      gap: 18px;
+      margin: 28px 0;
+    }
+
+    .visit-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .visit-item b {
+      color: var(--teal-dark);
+      font-size: 15px;
+    }
+
+    .visit-item p {
+      margin: 0;
+      color: #344555;
+      line-height: 1.65;
+    }
+
+    .map {
+      min-height: 420px;
+      background:
+        linear-gradient(rgba(16, 38, 53, 0.12), rgba(16, 38, 53, 0.12)),
+        url("https://images.unsplash.com/photo-1558980664-10e7170b5df9?auto=format&fit=crop&w=1200&q=82") center / cover;
+    }
+
+    footer {
+      padding: 30px 24px;
+      color: #d4e1e8;
+      background: #102635;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      font-size: 14px;
+    }
+
+    .footer-inner strong {
+      color: #ffffff;
+    }
+
+    @media (max-width: 920px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: 92vh;
+      }
+
+      .hero-facts,
+      .service-grid,
+      .process-layout,
+      .price-grid,
+      .gallery-wrap,
+      .visit-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-fact {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-fact:last-child {
+        border-bottom: 0;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-lead {
+        margin-top: 16px;
+      }
+
+      .gallery-main,
+      .gallery-side {
+        min-height: auto;
+      }
+
+      .gallery-main img,
+      .gallery-side img {
+        height: 260px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav {
+        min-height: 62px;
+        padding: 0 16px;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .brand-logo {
+        width: 38px;
+        height: 38px;
+      }
+
+      .nav-action {
+        min-height: 36px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      .hero {
+        padding-top: 62px;
+        align-items: end;
+        background-position: 62% center;
+      }
+
+      .hero-inner {
+        padding: 40px 18px 72px;
+      }
+
+      .hero-logo-lockup {
+        margin-bottom: 16px;
+      }
+
+      .hero-logo-lockup .brand-logo {
+        width: 26px;
+        height: 26px;
+      }
+
+      .hero-copy {
+        font-size: 16px;
+        line-height: 1.75;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      section {
+        padding: 58px 18px;
+      }
+
+      .service-grid,
+      .process-steps,
+      .price-grid {
+        gap: 14px;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .visit-info {
+        padding: 28px 22px;
+      }
+
+      .visit-item {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+
+      .footer-inner {
+        display: block;
+        line-height: 1.8;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="#top" aria-label="飞扬汽车洗护中心首页">
+        <span class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 96 96" role="img">
+            <defs>
+              <linearGradient id="fyLogoA" x1="16" y1="12" x2="78" y2="84" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#10bfae"/>
+                <stop offset="1" stop-color="#23639e"/>
+              </linearGradient>
+            </defs>
+            <rect width="96" height="96" rx="18" fill="url(#fyLogoA)"/>
+            <path d="M23 36h18c14 0 27 4 36 13" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+            <path d="M29 50h39" fill="none" stroke="#bffbf4" stroke-width="6" stroke-linecap="round"/>
+            <path d="M47 25 31 72" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+            <path d="M37 56h27" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+            <path d="M44 70c8-3 17-8 25-16" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="32" cy="70" r="5" fill="#102635"/>
+            <circle cx="68" cy="70" r="5" fill="#102635"/>
+            <path d="M24 80h48" fill="none" stroke="#e35f4f" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span>
+          <strong>飞扬汽车洗护中心</strong>
+          <span>精洗 · 美容 · 养护</span>
+        </span>
+      </a>
+      <div class="nav-links">
+        <a href="#services">服务项目</a>
+        <a href="#process">洗护流程</a>
+        <a href="#pricing">套餐价格</a>
+        <a href="#visit">到店信息</a>
+      </div>
+      <a class="nav-action" href="tel:13800008888">电话预约</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <div class="hero-logo-lockup" aria-label="飞扬汽车洗护中心专属标识">
+        <span class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 96 96" role="img">
+            <defs>
+              <linearGradient id="fyHeroLogoA" x1="16" y1="12" x2="78" y2="84" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#10bfae"/>
+                <stop offset="1" stop-color="#23639e"/>
+              </linearGradient>
+            </defs>
+            <rect width="96" height="96" rx="18" fill="url(#fyHeroLogoA)"/>
+            <path d="M23 36h18c14 0 27 4 36 13" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+            <path d="M29 50h39" fill="none" stroke="#bffbf4" stroke-width="6" stroke-linecap="round"/>
+            <path d="M47 25 31 72" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+            <path d="M37 56h27" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+            <path d="M44 70c8-3 17-8 25-16" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="32" cy="70" r="5" fill="#102635"/>
+            <circle cx="68" cy="70" r="5" fill="#102635"/>
+            <path d="M24 80h48" fill="none" stroke="#e35f4f" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="eyebrow">城市精致车主的日常洗护站</span>
+      </div>
+      <h1>飞扬汽车洗护中心</h1>
+      <p class="hero-copy">从泡沫预洗到内饰深洁，从漆面养护到镀膜保护，让每一次到店都把车况、质感和驾驶心情一起洗亮。</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#pricing">查看套餐</a>
+        <a class="button secondary" href="#visit">门店位置</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="hero-facts" aria-label="门店亮点">
+    <div class="hero-fact">
+      <strong>45分钟</strong>
+      <span>标准精洗平均交付时间，预约到店更从容</span>
+    </div>
+    <div class="hero-fact">
+      <strong>12道</strong>
+      <span>车身、轮毂、门缝、内饰分区清洁流程</span>
+    </div>
+    <div class="hero-fact">
+      <strong>21:30</strong>
+      <span>晚间营业，适合下班后顺路养护</span>
+    </div>
+  </div>
+
+  <main>
+    <section id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">SERVICES</p>
+            <h2>按车况拆分服务，不把每辆车都当成同一辆洗。</h2>
+          </div>
+          <p class="section-lead">门店采用中性洗剂、细纤维耗材和分区工具，减少太阳纹与二次污染，兼顾效率和细节。</p>
+        </div>
+        <div class="service-grid">
+          <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?auto=format&fit=crop&w=700&q=80" alt="汽车外观泡沫清洗">
+            <div class="body">
+              <h3>外观精洗</h3>
+              <p>泡沫预洗、双桶擦洗、轮毂清洁、门缝收水，恢复车身清爽光泽。</p>
+            </div>
+          </article>
+          <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=700&q=80" alt="汽车漆面养护后的亮面效果">
+            <div class="body">
+              <h3>漆面养护</h3>
+              <p>去污、抛光、封体蜡与镀膜护理，提升漆面触感与抗污表现。</p>
+            </div>
+          </article>
+          <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=700&q=80" alt="整洁汽车内饰座舱">
+            <div class="body">
+              <h3>内饰深洁</h3>
+              <p>座椅、脚垫、出风口、中控和后备箱细节清洁，适合家庭和通勤车辆。</p>
+            </div>
+          </article>
+          <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=700&q=80" alt="汽车在道路上的洁净车身">
+            <div class="body">
+              <h3>养护检查</h3>
+              <p>玻璃水、胎压、雨刮、轮胎外观基础检查，小问题尽早发现。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="process-band" id="process">
+      <div class="container process-layout">
+        <div class="process-copy">
+          <p class="section-kicker">PROCESS</p>
+          <h2>干净不是冲一遍水，是每个接触面的顺序都对。</h2>
+          <p>飞扬把洗护流程拆成可复核的步骤，车身、轮胎、玻璃、内饰使用独立工具，交付前由店长检查水痕、污渍和死角。</p>
+        </div>
+        <div class="process-steps">
+          <div class="step">
+            <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=900&q=82" alt="员工在洗护工位检查车辆外观">
+            <div class="step-body">
+              <span>1</span>
+              <h3>接车评估</h3>
+              <p>确认车况、重点污渍和用户关注区域，避免遗漏细节。</p>
+            </div>
+          </div>
+          <div class="step">
+            <img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?auto=format&fit=crop&w=900&q=82" alt="员工使用泡沫对车辆进行预洗">
+            <div class="step-body">
+              <span>2</span>
+              <h3>预洗去砂</h3>
+              <p>先软化泥沙和虫胶，再进入手工清洁，降低擦伤风险。</p>
+            </div>
+          </div>
+          <div class="step">
+            <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=900&q=82" alt="员工擦拭车辆细节并进行分区清洁">
+            <div class="step-body">
+              <span>3</span>
+              <h3>分区精洗</h3>
+              <p>上车身、下裙边、轮毂、内饰工具分离，洁净更稳定。</p>
+            </div>
+          </div>
+          <div class="step">
+            <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=900&q=82" alt="员工清洁车辆内饰并做交付检查">
+            <div class="step-body">
+              <span>4</span>
+              <h3>交付复检</h3>
+              <p>检查水痕、玻璃、门缝和轮胎光泽，确认后再交车。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">PACKAGES</p>
+            <h2>常用套餐清楚标价，到店按车型与车况确认。</h2>
+          </div>
+          <p class="section-lead">价格适用于五座轿车及常规 SUV，重度污渍、宠物毛发、柏油铁粉等项目现场沟通。</p>
+        </div>
+        <div class="price-grid">
+          <article class="price-card">
+            <span class="tag">日常通勤</span>
+            <h3>标准外洗</h3>
+            <p class="price">¥58 <small>起</small></p>
+            <ul>
+              <li>车身泡沫清洗</li>
+              <li>轮毂轮胎清洁</li>
+              <li>门缝与油箱盖擦拭</li>
+              <li>玻璃外侧清洁</li>
+            </ul>
+            <a class="button" href="tel:13800008888">预约外洗</a>
+          </article>
+          <article class="price-card featured">
+            <span class="tag">门店热选</span>
+            <h3>内外精洗</h3>
+            <p class="price">¥128 <small>起</small></p>
+            <ul>
+              <li>标准外洗全流程</li>
+              <li>内饰吸尘与擦拭</li>
+              <li>脚垫清洗与干燥</li>
+              <li>轮胎养护上光</li>
+            </ul>
+            <a class="button" href="tel:13800008888">预约精洗</a>
+          </article>
+          <article class="price-card">
+            <span class="tag">焕新护理</span>
+            <h3>漆面护理</h3>
+            <p class="price">¥198 <small>起</small></p>
+            <ul>
+              <li>车身基础去污</li>
+              <li>漆面光泽养护</li>
+              <li>漆面状态建议</li>
+            </ul>
+            <a class="button" href="tel:13800008888">预约护理</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">SHOP MOMENTS</p>
+            <h2>透明工位，明亮交付，看得见的细节才放心。</h2>
+          </div>
+          <p class="section-lead">等待区提供咖啡、充电和休息座位，也可将车辆留店，完成后电话通知取车。</p>
+        </div>
+        <div class="gallery-wrap">
+          <div class="gallery-main">
+            <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=1200&q=82" alt="汽车洗护门店内正在清洗车辆">
+          </div>
+          <div class="gallery-side">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80" alt="洗护后的黑色汽车外观">
+            <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=900&q=80" alt="明亮车灯与洁净车身细节">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" id="visit">
+      <div class="container visit-panel">
+        <div class="visit-info">
+          <p class="section-kicker">VISIT</p>
+          <h2>下班顺路来，洗完刚好开回家。</h2>
+          <div class="visit-list">
+            <div class="visit-item">
+              <b>营业时间</b>
+              <p>周一至周日 09:30 - 21:30</p>
+            </div>
+            <div class="visit-item">
+              <b>门店地址</b>
+              <p>南宁市青秀区宏达路七号</p>
+            </div>
+            <div class="visit-item">
+              <b>预约电话</b>
+              <p>138-0000-8888</p>
+            </div>
+          </div>
+          <a class="button primary" href="tel:13800008888">立即电话预约</a>
+        </div>
+        <div class="map" role="img" aria-label="汽车洗护门店外景"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>飞扬汽车洗护中心</strong> · 精洗美容养护门店</div>
+      <div>© 2026 Feiyang Auto Care. All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>

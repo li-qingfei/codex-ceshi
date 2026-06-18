@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment and local config
+.env
+.env.*
+!.env.example
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Office temporary files
+~$*
+
+# Workspace-only material that is not part of this Node site
+/assets/
+/car-wash-shop.html
+/generate_*.js
+/*.jpg
+/*.jpeg
+/*.png
+/*.pptx
+/AI*.md
+/Codex_AI*.md
+/mcp-and-skill-demo/
+
+# Unused generated asset from earlier page experiments
+/public/assets/bicycle-visit.svg
